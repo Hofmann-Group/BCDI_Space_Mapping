@@ -163,7 +163,7 @@ viewpoint = [-180, -90]; % viewpoint = [az, el], x-y plane
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 5. Save calculated shape
 % choose to save the calculated DCS shape
-save_reflection = 0; % 1 to save, 0 to not save
+save_reflection = 1; % 1 to save, 0 to not save
 
 % choose to take the twin of the new calculated DCS shape
 twin = 1; % 1 to take the conjugate reflection

@@ -120,7 +120,7 @@ viewpoint = [-180, -90]; % viewpoint = [az, el], x-y plane
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 4. Save calculated shape
 % choose to save the calculated SS shape
-save_reflection = 0; % 1 to save, 0 to not save
+save_reflection = 1; % 1 to save, 0 to not save
 
 % choose to take the twin of the new calculated SS shape
 twin = 1; % 1 to take the conjugate reflection
