@@ -206,11 +206,6 @@ if O.p_sam == 1
     O.p_sam = O.lambda*O.D/(O.N*O.d);
 end
 
-% scaling the original grids with lab space voxel size
-O.N1grid = O.N1grid*O.p_sam;
-O.N2grid = O.N2grid*O.p_sam;
-O.N3grid = O.N3grid*O.p_sam;
-
 % make pixel coordinate grids for the 3D volume of the new DCS shape
 [N.N1grid, N.N2grid, N.N3grid] = meshgrid(-(N.N1-1)/2:(N.N1-1)/2, -(N.N2-1)/2:(N.N2-1)/2, -(N.N3-1)/2:(N.N3-1)/2);
 
@@ -218,11 +213,6 @@ O.N3grid = O.N3grid*O.p_sam;
 if N.p_sam == 1
     N.p_sam = N.lambda*N.D/(N.N*N.d);
 end
-
-% scaling the new grids with lab space voxel size
-N.N1grid = N.N1grid*N.p_sam;
-N.N2grid = N.N2grid*N.p_sam;
-N.N3grid = N.N3grid*N.p_sam;
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -362,20 +352,20 @@ if plot_DCS_shape == 1
     
     if amplitudes == 1
         % plotting calculated DCS shape amplitude
-        N.plot = patch(isosurface(N.N1grid, N.N2grid, N.N3grid, abs(N.DCS_shape_CALC), amplitude_threshold));
+        N.plot = patch(isosurface(N.N1grid*N.p_sam, N.N2grid*N.p_sam, N.N3grid*N.p_sam, abs(N.DCS_shape_CALC), amplitude_threshold));
         set(N.plot, 'FaceColor', 'red', 'EdgeColor', 'none', 'FaceAlpha', 0.3);
         if test == 1
             % plotting reconstructed DCS shape amplitude
-            N.plot_true = patch(isosurface(N.N1grid, N.N2grid, N.N3grid, abs(N.DCS_shape_REC), amplitude_threshold));
+            N.plot_true = patch(isosurface(N.N1grid*N.p_sam, N.N2grid*N.p_sam, N.N3grid*N.p_sam, abs(N.DCS_shape_REC), amplitude_threshold));
             set(N.plot_true, 'FaceColor', 'blue', 'EdgeColor', 'none', 'FaceAlpha', 0.3);
         end
     else
         % plotting calculated DCS shape isosurface      
-        [faces,verts,colors] = isosurface(N.N1grid, N.N2grid, N.N3grid, abs(N.DCS_shape_CALC), amplitude_threshold, angle(N.DCS_shape_CALC));
+        [faces,verts,colors] = isosurface(N.N1grid*N.p_sam, N.N2grid*N.p_sam, N.N3grid*N.p_sam, abs(N.DCS_shape_CALC), amplitude_threshold, angle(N.DCS_shape_CALC));
         N.plot = patch('Vertices', verts, 'Faces', faces, 'FaceVertexCData', colors, 'FaceColor', 'interp', 'edgecolor', 'none');
         if test == 1
             % plotting reconstructed DCS shape isosurface
-            [faces,verts,colors] = isosurface(N.N1grid, N.N2grid, N.N3grid, abs(N.DCS_shape_REC), amplitude_threshold, angle(N.DCS_shape_REC));
+            [faces,verts,colors] = isosurface(N.N1grid*N.p_sam, N.N2grid*N.p_sam, N.N3grid*N.p_sam, abs(N.DCS_shape_REC), amplitude_threshold, angle(N.DCS_shape_REC));
             N.plot_true = patch('Vertices', verts, 'Faces', faces, 'FaceVertexCData', colors, 'FaceColor', 'interp', 'edgecolor', 'none');
         end
     end

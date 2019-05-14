@@ -159,11 +159,6 @@ if O.p_sam == 1
     O.p_sam = O.lambda*O.D/(O.N*O.d);
 end
 
-% scaling the original grids with lab space voxel size
-O.N1grid = O.N1grid*O.p_sam;
-O.N2grid = O.N2grid*O.p_sam;
-O.N3grid = O.N3grid*O.p_sam;
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Make original (O) coordinates (DO NOT TOUCH)
@@ -205,7 +200,7 @@ O.N3gridp = O.T_DCS_to_SS(3,1)*O.N1grid + O.T_DCS_to_SS(3,2)*O.N2grid + O.T_DCS_
 
 % interpolate original reflection data in the detector conjugated frame to sample space frame
 O.SS_shape_CALC = interp3(O.N1grid, O.N2grid, O.N3grid, O.DCS_shape_REC, O.N1gridp, O.N2gridp, O.N3gridp, 'linear',  0); % make any values outside original data zero.
-  
+
 % taking the twin if necessary
 if twin == 1
     F = ifftshift(fftn(fftshift(O.SS_shape_CALC)));
@@ -257,20 +252,20 @@ if plot_shape == 1
     
     if amplitudes == 1
         % plotting calculated shape amplitude
-        O.plot = patch(isosurface(O.N1grid, O.N2grid, O.N3grid, abs(O.SS_shape_CALC), amplitude_threshold));
+        O.plot = patch(isosurface(O.N1grid*O.p_sam, O.N2grid*O.p_sam, O.N3grid*O.p_sam, abs(O.SS_shape_CALC), amplitude_threshold));
         set(O.plot, 'FaceColor', 'red', 'EdgeColor', 'none', 'FaceAlpha', 0.3);
         if test == 1
             % plotting reconstructed shape amplitude
-            O.plot_true = patch(isosurface(O.N1grid, O.N2grid, O.N3grid, abs(O.SS_shape_REC), amplitude_threshold));
+            O.plot_true = patch(isosurface(O.N1grid*O.p_sam, O.N2grid*O.p_sam, O.N3grid*O.p_sam, abs(O.SS_shape_REC), amplitude_threshold));
             set(O.plot_true, 'FaceColor', 'blue', 'EdgeColor', 'none', 'FaceAlpha', 0.3);
         end
     else
         % plotting calculated shape isosurface
-        [faces,verts,colors] = isosurface(O.N1grid, O.N2grid, O.N3grid, abs(O.SS_shape_CALC), amplitude_threshold, angle(O.SS_shape_CALC));
+        [faces,verts,colors] = isosurface(O.N1grid*O.p_sam, O.N2grid*O.p_sam, O.N3grid*O.p_sam, abs(O.SS_shape_CALC), amplitude_threshold, angle(O.SS_shape_CALC));
         O.plot = patch('Vertices', verts, 'Faces', faces, 'FaceVertexCData', colors, 'FaceColor', 'interp', 'edgecolor', 'none');
         if test == 1
             % plotting reconstructed shape isosurface
-            [faces,verts,colors] = isosurface(O.N1grid, O.N2grid, O.N3grid, abs(O.SS_shape_REC), amplitude_threshold, angle(O.SS_shape_REC));
+            [faces,verts,colors] = isosurface(O.N1grid*O.p_sam, O.N2grid*O.p_sam, O.N3grid*O.p_sam, abs(O.SS_shape_REC), amplitude_threshold, angle(O.SS_shape_REC));
             O.plot_true = patch('Vertices', verts, 'Faces', faces, 'FaceVertexCData', colors, 'FaceColor', 'interp', 'edgecolor', 'none');
         end
     end
