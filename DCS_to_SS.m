@@ -281,8 +281,12 @@ if plot_shape == 1
     set(z_axis, 'Color', 'black', 'Linewidth', 2, 'AutoScale', 'off');
     text(0, 0, O.N3*O.p_sam/2, 'z_{sam}', 'Color', 'black', 'FontSize', 14);
     
-    % calculating shape overlap
+    % overlap textbox
     if test == 1
+        % centring masks for overlap calculation
+        O.SS_shape_CALC_MASK = circshift(O.SS_shape_CALC_MASK, size(O.SS_shape_CALC_MASK)/2-O.SS_shape_CALC_COM);
+        O.SS_shape_REC_MASK = circshift(O.SS_shape_REC_MASK, size(O.SS_shape_REC_MASK)/2-O.SS_shape_REC_COM);
+        % calculating overlap
         overlap = round(abs((1-abs(sum(sum(sum(O.SS_shape_CALC_MASK - O.SS_shape_REC_MASK))))/sum(sum(sum(O.SS_shape_REC_MASK))))*100), 2);
         annotation('textbox',[0.17, 0.1, .3, .3], 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle','String',['Overlap: ',num2str(overlap),'%'], 'BackgroundColor', 'white','FitBoxToText','on');
         legend([O.plot, O.plot_true], ['Calculated Sample Space Shape from (', num2str(O.hkl(1)),num2str(O.hkl(2)),num2str(O.hkl(3)),')'], ['Reconstructed Sample Space Shape from (', num2str(O.hkl(1)),num2str(O.hkl(2)),num2str(O.hkl(3)),')']);

@@ -8,8 +8,7 @@ close all;
 % Written By: David Yang
 % University of Oxford, Dept. of Engineering Science
 % 
-% PURPOSE: To map an object in detector conjugated space (DCS) to another
-% DCS for the same object but for a different reflection.
+% PURPOSE: To map an object in detector conjugated space (DCS) to another DCS for the same object but for a different reflection.
 % 
 % FILE INPUT: A reconstruction folder containing -AMP.mat and -PH.mat files
 % 
@@ -342,7 +341,10 @@ if plot_DCS_shape == 1
         
         % centring about the centre of mass
         fprintf('\n...centring DCS shapes...');
-        N.DCS_shape_REC_COM = ceil(centerOfMass(N.DCS_shape_REC));
+        N.DCS_shape_REC_MASK = single(abs(N.DCS_shape_REC) > binarize_threshold);
+        structure_element = strel('sphere', 3);
+        N.DCS_shape_REC_MASK = imerode(imdilate(N.DCS_shape_REC_MASK, structure_element),structure_element); % takes care of dislocation cores
+        N.DCS_shape_REC_COM = ceil(centerOfMass(N.DCS_shape_REC_MASK));
         N.DCS_shape_REC = circshift(N.DCS_shape_REC, size(N.DCS_shape_REC)/2-N.DCS_shape_REC_COM);
     end
     
@@ -381,9 +383,13 @@ if plot_DCS_shape == 1
     set(x_3p_axis, 'Color', 'black', 'Linewidth', 2, 'AutoScale', 'off');
     text(0, 0, O.N3*O.p_sam/2, 'z''', 'Color', 'black', 'FontSize', 14);
     
-    % calculating shape overlap
+    % overlap textbox
     if test == 1
-        overlap = round(abs((1-abs(sum(sum(sum(N.DCS_shape_CALC - N.DCS_shape_REC))))/sum(sum(sum(N.DCS_shape_REC))))*100), 2);
+        % centring masks for overlap calculation
+        N.DCS_shape_CALC_MASK = circshift(N.DCS_shape_CALC_MASK, size(N.DCS_shape_CALC_MASK)/2-N.DCS_shape_CALC_COM);
+        N.DCS_shape_REC_MASK = circshift(N.DCS_shape_REC_MASK, size(N.DCS_shape_REC_MASK)/2-N.DCS_shape_REC_COM);
+        % calculating overlap
+        overlap = round(abs((1-abs(sum(sum(sum(N.DCS_shape_CALC_MASK - N.DCS_shape_REC_MASK))))/sum(sum(sum(N.DCS_shape_REC_MASK))))*100), 2);
         annotation('textbox',[0.17, 0.1, .3, .3], 'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle','String',['Overlap: ',num2str(overlap),'%'], 'BackgroundColor', 'white','FitBoxToText','on');
         legend([N.plot, N.plot_true], ['Calculated (', num2str(N.hkl(1)),num2str(N.hkl(2)),num2str(N.hkl(3)),') DCS shape'], ['Reconstructed (', num2str(N.hkl(1)),num2str(N.hkl(2)),num2str(N.hkl(3)),') DCS shape']);
     else
