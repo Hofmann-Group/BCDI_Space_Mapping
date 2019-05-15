@@ -211,7 +211,7 @@ end
 O.DCS_shape_CALC_MASK = single(abs(O.DCS_shape_CALC) > binarize_threshold);
 structure_element = strel('sphere', 3);
 O.DCS_shape_CALC_MASK = imerode(imdilate(O.DCS_shape_CALC_MASK, structure_element),structure_element); % takes care of dislocation cores
-O.DCS_shape_CALC_COM = round(centerOfMass(O.DCS_shape_CALC_MASK));
+O.DCS_shape_CALC_COM = ceil(centerOfMass(O.DCS_shape_CALC_MASK));
 O.DCS_shape_CALC = circshift(O.DCS_shape_CALC, size(O.DCS_shape_CALC)/2-O.DCS_shape_CALC_COM);
 
 % binarizing the calculated DCS shape
@@ -261,7 +261,7 @@ if plot_DCS_shape == 1
         O.DCS_shape_REC_MASK = single(abs(O.DCS_shape_REC) > binarize_threshold);
         structure_element = strel('sphere', 3);
         O.DCS_shape_REC_MASK = imerode(imdilate(O.DCS_shape_REC_MASK, structure_element),structure_element); % takes care of dislocation cores
-        O.DCS_shape_REC_COM = round(centerOfMass(O.DCS_shape_REC_MASK));
+        O.DCS_shape_REC_COM = ceil(centerOfMass(O.DCS_shape_REC_MASK));
         O.DCS_shape_REC = circshift(O.DCS_shape_REC, size(O.DCS_shape_REC)/2-O.DCS_shape_REC_COM);
     end
     
@@ -290,15 +290,15 @@ if plot_DCS_shape == 1
     end
     
     % plotting x', y' and z' axes
-    x_1p_axis = quiver3(0, 0, 0, 0.9*O.N1*O.p_sam/2, 0, 0);
-    set(x_1p_axis, 'Color', 'black', 'Linewidth', 2, 'AutoScale', 'off');
-    text(O.N1*O.p_sam/2, 0, 0, 'x''', 'Color', 'black', 'FontSize', 14);
-    x_2p_axis = quiver3(0, 0, 0, 0, 0.9*O.N2*O.p_sam/2, 0);
-    set(x_2p_axis, 'Color', 'black', 'Linewidth', 2, 'AutoScale', 'off');
-    text(0, O.N2*O.p_sam/2, 0, 'y''', 'Color', 'black', 'FontSize', 14);
-    x_3p_axis = quiver3(0, 0, 0, 0, 0, 0.9*O.N3*O.p_sam/2);
-    set(x_3p_axis, 'Color', 'black', 'Linewidth', 2, 'AutoScale', 'off');
-    text(0, 0, O.N3*O.p_sam/2, 'z''', 'Color', 'black', 'FontSize', 14);
+%     x_1p_axis = quiver3(0, 0, 0, 0.9*O.N1*O.p_sam/2, 0, 0);
+%     set(x_1p_axis, 'Color', 'black', 'Linewidth', 2, 'AutoScale', 'off');
+%     text(O.N1*O.p_sam/2, 0, 0, 'x''', 'Color', 'black', 'FontSize', 14);
+%     x_2p_axis = quiver3(0, 0, 0, 0, 0.9*O.N2*O.p_sam/2, 0);
+%     set(x_2p_axis, 'Color', 'black', 'Linewidth', 2, 'AutoScale', 'off');
+%     text(0, O.N2*O.p_sam/2, 0, 'y''', 'Color', 'black', 'FontSize', 14);
+%     x_3p_axis = quiver3(0, 0, 0, 0, 0, 0.9*O.N3*O.p_sam/2);
+%     set(x_3p_axis, 'Color', 'black', 'Linewidth', 2, 'AutoScale', 'off');
+%     text(0, 0, O.N3*O.p_sam/2, 'z''', 'Color', 'black', 'FontSize', 14);
     
     % calculating shape overlap
     if test == 1
@@ -317,7 +317,7 @@ if plot_DCS_shape == 1
     daspect([1,1,1]);
     axis equal;
     axis vis3d xy;
-    grid on;
+%     grid on;
     xlim([-O.N1*O.p_sam/2, O.N1*O.p_sam/2]); ylim([-O.N2*O.p_sam/2, O.N2*O.p_sam/2]); zlim([-O.N3*O.p_sam/2, O.N3*O.p_sam/2]);
     view(viewpoint(1), viewpoint(2));
     lighting gouraud;

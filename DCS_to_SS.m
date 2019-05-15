@@ -211,7 +211,7 @@ end
 O.SS_shape_CALC_MASK = single(abs(O.SS_shape_CALC) > amplitude_threshold);
 structure_element = strel('sphere', 3);
 O.SS_shape_CALC_MASK = imerode(imdilate(O.SS_shape_CALC_MASK, structure_element),structure_element); % takes care of dislocation cores
-O.SS_shape_CALC_COM = round(centerOfMass(O.SS_shape_CALC_MASK));
+O.SS_shape_CALC_COM = ceil(centerOfMass(O.SS_shape_CALC_MASK));
 O.SS_shape_CALC = circshift(O.SS_shape_CALC, size(O.SS_shape_CALC)/2-O.SS_shape_CALC_COM);
 
 
@@ -242,7 +242,7 @@ if plot_shape == 1
         O.SS_shape_REC_MASK = single(abs(O.SS_shape_REC) > amplitude_threshold); % binarizing
         structure_element = strel('sphere', 3);
         O.SS_shape_REC_MASK = imerode(imdilate(O.SS_shape_REC_MASK, structure_element),structure_element);   %takes care of dislocation cores
-        O.SS_shape_REC_COM = round(centerOfMass(O.SS_shape_REC_MASK));
+        O.SS_shape_REC_COM = ceil(centerOfMass(O.SS_shape_REC_MASK));
         O.SS_shape_REC = circshift(O.SS_shape_REC, size(O.SS_shape_REC)/2-O.SS_shape_REC_COM);
     end
     

@@ -295,7 +295,7 @@ end
 N.DCS_shape_CALC_MASK = single(abs(N.DCS_shape_CALC) > amplitude_threshold);
 structure_element = strel('sphere', 3);
 N.DCS_shape_CALC_MASK = imerode(imdilate(N.DCS_shape_CALC_MASK, structure_element),structure_element);   %takes care of dislocation cores
-N.DCS_shape_CALC_COM = round(centerOfMass(N.DCS_shape_CALC_MASK));
+N.DCS_shape_CALC_COM = ceil(centerOfMass(N.DCS_shape_CALC_MASK));
 N.DCS_shape_CALC = circshift(N.DCS_shape_CALC, size(N.DCS_shape_CALC)/2-N.DCS_shape_CALC_COM);
 
 % binarizing the calculated DCS shape
@@ -342,7 +342,7 @@ if plot_DCS_shape == 1
         
         % centring about the centre of mass
         fprintf('\n...centring DCS shapes...');
-        N.DCS_shape_REC_COM = round(centerOfMass(N.DCS_shape_REC));
+        N.DCS_shape_REC_COM = ceil(centerOfMass(N.DCS_shape_REC));
         N.DCS_shape_REC = circshift(N.DCS_shape_REC, size(N.DCS_shape_REC)/2-N.DCS_shape_REC_COM);
     end
     
