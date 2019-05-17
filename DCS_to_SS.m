@@ -234,7 +234,8 @@ if plot_shape == 1
         try
             O.SS_shape_REC = cell2mat(struct2cell(load([O.dir, '/', O.file_name, '.mat'])));
         catch
-            O.SS_shape_REC = cell2mat(struct2cell(load(O.file_name)));
+            fprintf('\n...the reconstruction folder and/or file is corrupt or cannot be found...');
+            test = 0;
         end
 
         % centring about the centre of mass

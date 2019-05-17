@@ -244,8 +244,8 @@ if plot_DCS_shape == 1
             O.DCS_shape_REC_AMP = cell2mat(struct2cell(load([O.dir, '/', O.file_name, '/', O.file_name,'-AMP.mat'])));
             O.DCS_shape_REC_PH = cell2mat(struct2cell(load([O.dir, '/', O.file_name, '/', O.file_name,'-PH.mat'])));
         catch
-            O.DCS_shape_REC_AMP = cell2mat(struct2cell(load([O.file_name, '/', O.file_name,'-AMP.mat'])));
-            O.DCS_shape_REC_PH = cell2mat(struct2cell(load([O.file_name, '/', O.file_name,'-PH.mat'])));
+            fprintf('\n...the reconstruction folder and/or file is corrupt or cannot be found...');
+            test = 0;
         end
         
         % generating the reconstructed DCS shape
