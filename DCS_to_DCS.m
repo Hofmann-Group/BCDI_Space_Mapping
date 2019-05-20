@@ -12,14 +12,14 @@ close all;
 % 
 % FILE INPUT: A reconstruction folder containing -AMP.mat and -PH.mat files
 % 
-% FILE OUTPUT: A file containing the calculated DCS in a -SUP.mat file
+% FILE OUTPUT: A file containing the calculated DCS in a -BIN.mat file
 % 
 % USER-DEFINED SECTIONS:
 % 1. Original reflection details
-% - collects details about the original reconstruction shape to be translated
+% - collects details about the original reconstructed shape to be translated
 % 
 % 2. New reflection details
-% - collects details about the new reconstruction shape to be made
+% - collects details about the new shape to be made
 % 
 % 3. Beamline selection
 % - user specifies the beamline plugin to create specific rotation matrices
@@ -28,10 +28,10 @@ close all;
 % - user can plot the calculated shape and configure parameters
 % 
 % 5. Save calculated shape
-% - option to save the calculated DCS shape or twin in a -SUP.mat file
+% - option to save the calculated DCS shape or twin in a -BIN.mat file
 % 
 % 6. Test
-% - to plot the calculated shape with a previous reconstruction
+% - to plot the calculated shape with a previous reconstruction for comparison
 % 
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -78,16 +78,16 @@ O.lambda = (12.398/10.0)/10*10^-9;
 O.p_sam = 1; % obtained from reconstruction, set to 1 if unknown
 
 % beamline sample motor angles in degrees (set to the motors' default angles for lab space)
-% O.theta_spec = 0; % for lab space
-% O.chi_spec = 90; % for lab space
-% O.phi_spec = 0; % for lab space
-O.theta_spec = -25.9718;
-O.chi_spec = 153.4349;
-O.phi_spec = -47.0851;
+% O.theta_bl = 0; % for lab space
+% O.chi_bl = 90; % for lab space
+% O.phi_bl = 0; % for lab space
+O.theta_bl = -25.9718;
+O.chi_bl = 153.4349;
+O.phi_bl = -47.0851;
 
 % beamline detector motor angles in degrees
-O.delta_spec = 40.2954;
-O.gamma_spec = 36.0786;
+O.delta_bl = 40.2954;
+O.gamma_bl = 36.0786;
 
 % choose rocking angle and increment in degrees
 O.rocking_angle = 'dtheta'; % 'dphi' rotate about x-axis, 'dtheta' rotate about y-axis for 34-ID-C
@@ -114,16 +114,16 @@ N.lambda = (12.398/10.0)/10*10^-9;
 N.p_sam = 1; % obtained from reconstruction, set to 1 if unknown
 
 % beamline sample motor angles in degrees (set to the motors' default angles for lab space)
-% N.theta_spec = 0; % for lab space
-% N.chi_spec = 90; % for lab space
-% N.phi_spec = 0; % for lab space
-N.theta_spec = 62.0090;
-N.chi_spec = 77.1857;
-N.phi_spec = -45.3004;
+% N.theta_bl = 0; % for lab space
+% N.chi_bl = 90; % for lab space
+% N.phi_bl = 0; % for lab space
+N.theta_bl = 62.0090;
+N.chi_bl = 77.1857;
+N.phi_bl = -45.3004;
 
 % beamline detector motor angles in degrees
-N.delta_spec = 8.7891;
-N.gamma_spec = 38.8299;
+N.delta_bl = 8.7891;
+N.gamma_bl = 38.8299;
 
 % choose rocking angle and increment in degrees
 N.rocking_angle = 'dtheta'; % 'dphi' rotate about x-axis, 'dtheta' rotate about y-axis for 34-ID-C
@@ -138,10 +138,10 @@ N.N = 256; % number of pixels along one dimension of square detector
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 3. Beamline selection
 % beamline-specific plugin for O
-[O.R_dqp_12, O.R_dqp_3, O.R_xyz, O.S_0lab_dir] = plugin_APS_34IDC(O.theta_spec, O.chi_spec, O.phi_spec, O.delta_spec, O.gamma_spec, O.rocking_increment, O.rocking_angle);
+[O.R_dqp_12, O.R_dqp_3, O.R_xyz, O.S_0lab_dir] = plugin_APS_34IDC(O.theta_bl, O.chi_bl, O.phi_bl, O.delta_bl, O.gamma_bl, O.rocking_increment, O.rocking_angle);
 
 % beamline-specific plugin for N
-[N.R_dqp_12, N.R_dqp_3, N.R_xyz, N.S_0lab_dir] = plugin_APS_34IDC(N.theta_spec, N.chi_spec, N.phi_spec, N.delta_spec, N.gamma_spec, N.rocking_increment, N.rocking_angle);
+[N.R_dqp_12, N.R_dqp_3, N.R_xyz, N.S_0lab_dir] = plugin_APS_34IDC(N.theta_bl, N.chi_bl, N.phi_bl, N.delta_bl, N.gamma_bl, N.rocking_increment, N.rocking_angle);
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -168,11 +168,11 @@ save_reflection = 1; % 1 to save, 0 to not save
 twin = 1; % 1 to take the conjugate reflection
 
 % choose to binarize the calculated DCS shape based on a threshold value
-binarize = 1;
+binarize = 1; % 1 to binarize according to binarize_threshold
 binarize_threshold = 0.3;
 
 % save directory
-save_dir = 'Examples'; 
+save_dir = 'Simulated Data'; 
 
 % save name
 save_name = 'Cylinder'; 
@@ -299,6 +299,7 @@ N.DCS_shape_CALC = circshift(N.DCS_shape_CALC, size(N.DCS_shape_CALC)/2-N.DCS_sh
 
 % binarizing the calculated DCS shape
 if binarize == 1
+    fprintf(['\n...binarizing new reflection DCS shape with a threshold of ', num2str(binarize_threshold), '...']);
     N.DCS_shape_CALC = single(abs(N.DCS_shape_CALC) > binarize_threshold); % binarizing
 end
 
@@ -307,12 +308,9 @@ end
 %% Saving new reflection DCS shape (DO NOT TOUCH)
 if save_reflection == 1
     fprintf('\n...saving new reflection DCS shape...');
+    mkdir(save_dir);
     array = N.DCS_shape_CALC;
-    if binarize == 1
-        save([save_dir, '/', save_name,'_(', num2str(N.hkl(1)), num2str(N.hkl(2)), num2str(N.hkl(3)),')_', num2str(O.gamma_spec),'_gamma_',num2str(O.delta_spec),'_delta_',num2str(O.rocking_increment),'_',O.rocking_angle, '-BINSUP.mat'], 'array');
-    else
-        save([save_dir, '/', save_name,'_(', num2str(N.hkl(1)), num2str(N.hkl(2)), num2str(N.hkl(3)),')_', num2str(O.gamma_spec),'_gamma_',num2str(O.delta_spec),'_delta_',num2str(O.rocking_increment),'_',O.rocking_angle, '-SUP.mat'], 'array');
-    end
+    save([save_dir, '/', save_name,'_(', num2str(N.hkl(1)), num2str(N.hkl(2)), num2str(N.hkl(3)),')_', num2str(O.gamma_bl),'_gamma_',num2str(O.delta_bl),'_delta_',num2str(O.rocking_increment),'_',O.rocking_angle, '-BIN.mat'], 'array');
 end
 
 
