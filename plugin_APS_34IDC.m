@@ -7,12 +7,12 @@ delta = delta_bl;
 gamma = -gamma_bl;
 
 % rotation matrices
-R_dqp_12 = roty(delta)*rotx(gamma);
-R_xyz = roty(theta)*rotz(chi)*rotx(phi); % rotation matrix to rotate a vector in sample coordiantes into lab coordinates
+R_dqp_12 = rotyd(delta)*rotxd(gamma);
+R_xyz = rotyd(theta)*rotzd(chi)*rotxd(phi); % rotation matrix to rotate a vector in sample coordiantes into lab coordinates
 if strcmp(rocking_angle, 'dtheta')
-    R_dqp_3 = roty(-rocking_increment); % it's the negative in rocking increment because we scan from negative to positive
+    R_dqp_3 = rotyd(-rocking_increment); % it's the negative in rocking increment because we scan from negative to positive
 elseif strcmp(rocking_angle, 'dphi')
-    R_dqp_3 = rotx(-rocking_increment); % it's the negative in rocking increment because we scan from negative to positive
+    R_dqp_3 = rotxd(-rocking_increment); % it's the negative in rocking increment because we scan from negative to positive
 end
 
 % S_0lab direction for APS
