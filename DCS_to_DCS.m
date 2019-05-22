@@ -50,7 +50,7 @@ fprintf('<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>\n');
 fprintf('\n...collecting original reflection details...');
 
 % directory to the reconstruction folder
-O.dir = 'Examples';
+O.dir = 'Reconstruction Examples';
 
 % name of the reconstruction folder
 O.file_name = 'Rec-Cylinder_(-120)_dtheta-00274-ERlrHIOlr2000-NM-SW';
@@ -187,7 +187,7 @@ save_name = 'Cylinder';
 test = 1;
 
 % directory to the reconstruction folder
-N.dir = 'Examples';
+N.dir = 'Reconstruction Examples';
 
 % name of the reconstruction folder
 N.file_name = 'Rec-Cylinder_(111)_dtheta-00685-ERlrHIOlr2000-NM-SW';

@@ -47,7 +47,7 @@ fprintf('<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>\n');
 fprintf('\n...collecting original reflection details...');
 
 % directory to the reconstruction folder
-O.dir = 'Examples';
+O.dir = 'Reconstruction Examples';
 
 % name of the reconstruction folder
 O.file_name = 'Rec-Cylinder_(-120)_dtheta-00274-ERlrHIOlr2000-NM-SW';
@@ -141,7 +141,7 @@ save_name = 'Cylinder';
 test = 1;
 
 % directory to the reconstruction folder
-O.dir = 'Examples/Cylinder_(-120)_-36.0786_gamma_40.2954_delta_0.00274_dtheta';
+O.dir = 'Reconstruction Examples/Cylinder_(-120)_-36.0786_gamma_40.2954_delta_0.00274_dtheta';
 
 % name of the reconstruction folder
 O.file_name = 'Cylinder_(-120)_-36.0786_gamma_40.2954_delta_0.00274_dtheta-SAM';
