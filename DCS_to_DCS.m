@@ -137,6 +137,9 @@ N.N = 256; % number of pixels along one dimension of square detector
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 3. Beamline selection
+% adding path to APS 34-ID-C angles folder
+addpath(genpath('APS 34-ID-C angles'));
+
 % beamline-specific plugin for O
 [O.R_dqp_12, O.R_dqp_3, O.R_xyz, O.S_0lab_dir] = plugin_APS_34IDC(O.theta_bl, O.chi_bl, O.phi_bl, O.delta_bl, O.gamma_bl, O.rocking_increment, O.rocking_angle);
 
