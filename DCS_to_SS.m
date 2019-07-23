@@ -4,7 +4,7 @@ close all;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Mapping Detector Conjugated Space to Sample Space
 % Version 1.0
-% May 2019
+% July 2019
 % Written By: David Yang
 % University of Oxford, Dept. of Engineering Science
 % 
@@ -38,7 +38,7 @@ close all;
 fprintf('<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>\n');
 fprintf('       Mapping Detector Conjugated Space to Sample Space\n');
 fprintf('                         Version 1.0\n');
-fprintf('                           May 2019\n');
+fprintf('                          July 2019\n');
 fprintf('                    Written By: David Yang\n');
 fprintf('      University of Oxford, Dept. of Engineering Science\n');
 fprintf('<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>\n');
