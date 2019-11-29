@@ -4,9 +4,9 @@ close all;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Mapping Detector Conjugated Space to Detector Conjugated Space
 % Version 1.0
-% July 2019
+% November 2019
 % Written By: David Yang
-% University of Oxford, Dept. of Engineering Science
+% University of Oxford, Dept. of Engineering Science, Hofmann Group
 % 
 % PURPOSE: To map an object in detector conjugated space (DCS) to another DCS for the same object but for a different reflection.
 % 
@@ -41,9 +41,9 @@ close all;
 fprintf('<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>\n');
 fprintf('Mapping Detector Conjugated Space to Detector Conjugated Space\n');
 fprintf('                          Version 1.0\n');
-fprintf('                           July 2019\n');
+fprintf('                         November 2019\n');
 fprintf('                     Written By: David Yang\n');
-fprintf('      University of Oxford, Dept. of Engineering Science\n');
+fprintf(' University of Oxford, Dept. of Engineering Science, Hofmann Group\n');
 fprintf('<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>\n');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 1. Original reflection details
@@ -65,7 +65,7 @@ catch
 end
 
 % generating the DCS shape
-O.DCS_shape_REC = abs(O.DCS_shape_REC_AMP.*exp(1i.*O.DCS_shape_REC_PH));
+O.DCS_shape_REC = O.DCS_shape_REC_AMP.*exp(1i.*O.DCS_shape_REC_PH);
 
 % the old hkl reflection
 O.hkl = [-1; 2; 0];

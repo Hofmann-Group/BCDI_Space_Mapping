@@ -4,9 +4,9 @@ close all;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Mapping Sample Space to Detector Conjugated Space
 % Version 1.0
-% July 2019
+% November 2019
 % Written By: David Yang
-% University of Oxford, Dept. of Engineering Science
+% University of Oxford, Dept. of Engineering Science, Hofmann Group
 % 
 % PURPOSE: To map an object in sample space (SS) to detector conjugated space (DCS) for the same object.
 % 
@@ -41,9 +41,9 @@ close all;
 fprintf('<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>\n');
 fprintf('       Mapping Sample Space to Detector Conjugated Space\n');
 fprintf('                         Version 1.0\n');
-fprintf('                          July 2019\n');
+fprintf('                        November 2019\n');
 fprintf('                    Written By: David Yang\n');
-fprintf('      University of Oxford, Dept. of Engineering Science\n');
+fprintf(' University of Oxford, Dept. of Engineering Science, Hofmann Group\n');
 fprintf('<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>\n');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 1. Original reflection details
@@ -62,7 +62,7 @@ catch
     O.SS_shape_REC = cell2mat(struct2cell(load([O.file_name, '.mat'])));
 end
 
-% the old hkl reflection
+% the desired hkl reflection
 O.hkl = [-1; 2; 0];
 
 % wavelength in m for original reflection
@@ -70,7 +70,7 @@ O.lambda = (12.398/10.0)/10*10^-9;
 
 % get size of the original matrix
 [O.N1, O.N2, O.N3] = size(O.SS_shape_REC);
-O.p_sam = 1; % obtained from reconstruction, set to 1 if unknown
+O.p_sam = 1; % pixel size of reconstruction in m, set to 1 if unknown
 
 % beamline sample motor angles in degrees (set to the motors' default angles for lab space)
 % O.theta_bl = 0; % for lab space
@@ -159,7 +159,7 @@ fprintf('\n...making pixel grids...');
 % make pixel coordinate grids for the 3D volume of the original DCS shape
 [O.N1grid, O.N2grid, O.N3grid] = meshgrid(-(O.N1-1)/2:(O.N1-1)/2, -(O.N2-1)/2:(O.N2-1)/2, -(O.N3-1)/2:(O.N3-1)/2);
 
-% calculating original voxel size if unknown
+% calculating original pixel size if unknown
 if O.p_sam == 1
     O.p_sam = O.lambda*O.D/(O.N*O.d);
 end

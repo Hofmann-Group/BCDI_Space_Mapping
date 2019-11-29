@@ -4,9 +4,9 @@ close all;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Mapping Detector Conjugated Space to Sample Space
 % Version 1.0
-% July 2019
+% November 2019
 % Written By: David Yang
-% University of Oxford, Dept. of Engineering Science
+% University of Oxford, Dept. of Engineering Science, Hofmann Group
 % 
 % PURPOSE: To map an object in detector conjugated space (DCS) to sample space (SS) for the same object.
 % 
@@ -38,9 +38,9 @@ close all;
 fprintf('<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>\n');
 fprintf('       Mapping Detector Conjugated Space to Sample Space\n');
 fprintf('                         Version 1.0\n');
-fprintf('                          July 2019\n');
+fprintf('                        November 2019\n');
 fprintf('                    Written By: David Yang\n');
-fprintf('      University of Oxford, Dept. of Engineering Science\n');
+fprintf(' University of Oxford, Dept. of Engineering Science, Hofmann Group\n');
 fprintf('<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>---<>\n');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 1. Original reflection details
@@ -62,7 +62,7 @@ catch
 end
 
 % generating the DCS shape
-O.DCS_shape_REC = abs(O.DCS_shape_REC_AMP.*exp(1i.*O.DCS_shape_REC_PH));
+O.DCS_shape_REC = O.DCS_shape_REC_AMP.*exp(1i.*O.DCS_shape_REC_PH);
 
 % the old hkl reflection
 O.hkl = [-1; 2; 0];
@@ -72,7 +72,7 @@ O.lambda = (12.398/10.0)/10*10^-9;
 
 % get size of the original matrix
 [O.N1, O.N2, O.N3] = size(O.DCS_shape_REC);
-O.p_sam = 1; % obtained from reconstruction, set to 1 if unknown
+O.p_sam = 1; % pixel size of reconstruction in m, set to 1 if unknown
 
 % beamline sample motor angles in degrees (set to the motors' default angles for lab space)
 % O.theta_bl = 0; % for lab space
@@ -107,8 +107,8 @@ addpath(genpath('APS 34-ID-C angles'));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 3. Plot options
-% plot the calculated DCS shape
-plot_shape = 1; % 1 to plot calculated DCS shape
+% plot the calculated SS shape
+plot_shape = 1; % 1 to plot calculated SS shape
 
 % toggle between viewing the thresholded amplitude or isosurface
 amplitudes = 1; % 1 to plot amplitudes, 0 to plot isosurfaces
@@ -157,7 +157,7 @@ fprintf('\n...making pixel grids...');
 % make pixel coordinate grids for the 3D volume of the original DCS shape
 [O.N1grid, O.N2grid, O.N3grid] = meshgrid(-(O.N1-1)/2:(O.N1-1)/2, -(O.N2-1)/2:(O.N2-1)/2, -(O.N3-1)/2:(O.N3-1)/2);
 
-% calculating original voxel size if unknown
+% calculating original pixel size in m if unknown
 if O.p_sam == 1
     O.p_sam = O.lambda*O.D/(O.N*O.d);
 end
@@ -232,7 +232,7 @@ end
 %% Testing calculated shape with reconstructed shape (DO NOT TOUCH)
 if plot_shape == 1
     if test == 1
-        fprintf('\n...plotting reconstructed detector conjugated space shape from reconstruction to compare...');
+        fprintf('\n...plotting reconstructed sample space shape from reconstruction to compare...');
         
         % importing the sample space files
         try
