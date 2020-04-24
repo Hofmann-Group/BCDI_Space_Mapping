@@ -191,7 +191,7 @@ O.zp = 2*pi*cross(O.N1*O.p_sam*O.q_1p, O.N2*O.p_sam*O.q_2p)./O.V_DRS;
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Map from original DCS to new DCS (DO NOT TOUCH)
+%% Map from original DCS to new SS (DO NOT TOUCH)
 fprintf('\n...interpolating detector conjugated to sample space coordinates...');
 % making the T_DCS_to_SS matrix for O
 O.T_DCS_to_SS = [O.xp, O.yp, O.zp]\[O.x_sam, O.y_sam, O.z_sam]; % equivalent to [a_1, a_2, a_3]*inv(b_1, b_2, b_3])
