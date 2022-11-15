@@ -4,7 +4,7 @@ The repository, BCDI_Space_Mapping, contains three scripts that map from detecto
 
 ## Installation
 
-For a complete download, please use GitHub Desktop to pull the repository to your machine. If the .zip file is downloaded, the Reconstruction Examples folder will contain pointer files rather than the actual file. This will prevent the reconstructed shape from being plotted alongside the calculated shape in the demonstration. Regardless, the MATLAB scripts will still be perfectly functional.
+For a complete download, please use GitHub Desktop to pull the repository to your machine. If the .zip file is downloaded, the Reconstruction Examples folder will contain pointer files rather than the actual file. This will prevent the reconstructed shape from being plotted alongside the calculated shape in the demonstration. Regardless, the MATLAB scripts will still be perfectly functional. The full files can be downloaded here: https://1drv.ms/u/s!AktbDGM_uN11h0SycRqbJUcvjzto?e=3dFjb1 
 
 ## Usage
 
